@@ -28,15 +28,15 @@ renderer.outputEncoding = THREE.sRGBEncoding;
 
 appDomRoot.appendChild(renderer.domElement);
 
-//let geometry = new THREE.BoxGeometry(3, 3, 3);
-let geometry = new THREE.TorusGeometry(2, 0.5, 32, 128);
-//const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+let gold = 0xfffd87;
+let silver = 0xffffff;
+
+let geometry = new THREE.BoxGeometry(3, 3, 3);
+//let geometry = new THREE.TorusGeometry(2, 0.5, 32, 128);
+//let geometry = new THREE.RingBufferGeometry(2, 2.5, 32, 128);
 let material = new THREE.MeshPhysicalMaterial({
-	//emissive: 0xff0000,
-	//emissiveIntensity: 0.3,
-	color: 0xffffd0,
-	//color: 0xffffff,
-	roughness: 0.01,
+	color: silver,
+	roughness: 0.02,
 	metalness: 1,
 });
 let cube = new THREE.Mesh(geometry, material);
@@ -68,7 +68,8 @@ async function loadEnvironment() {
 
 	let loader = new EXRLoader();
 	//let texture = await loader.loadAsync("/textures/wooden_lounge_1k.exr");
-	let texture = await loader.loadAsync("/textures/pretville_cinema_2k.exr");
+	//let texture = await loader.loadAsync("/textures/pretville_cinema_2k-blur16px.exr");
+	let texture = await loader.loadAsync("/textures/pretville_cinema_2k-clonerB.exr");
 	exrCubeRenderTarget = pmremGenerator.fromEquirectangular(texture);
 	texture.dispose();
 
@@ -166,7 +167,7 @@ if (ownEnv) {
 function animate() {
 	requestAnimationFrame(animate);
 	cube.rotation.x += 0.001;
-	cube.rotation.y += 0.001;
+	//cube.rotation.y += 0.001;
 	renderer.render(scene, camera);
 }
 animate();
